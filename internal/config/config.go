@@ -80,11 +80,11 @@ func Load(configPath string) (*Config, error) {
 
 	// Environment variable overrides
 	v.AutomaticEnv()
-	v.BindEnv("discord.token", "SAIA_DISCORD_TOKEN")
-	v.BindEnv("model.api_key", "SAIA_MODEL_API_KEY")
-	v.BindEnv("database.path", "SAIA_DB_PATH")
-	v.BindEnv("logging.level", "SAIA_LOG_LEVEL")
-	v.BindEnv("health.port", "SAIA_PORT")
+	_ = v.BindEnv("discord.token", "SAIA_DISCORD_TOKEN")
+	_ = v.BindEnv("model.api_key", "SAIA_MODEL_API_KEY")
+	_ = v.BindEnv("database.path", "SAIA_DB_PATH")
+	_ = v.BindEnv("logging.level", "SAIA_LOG_LEVEL")
+	_ = v.BindEnv("health.port", "SAIA_PORT")
 
 	if err := v.ReadInConfig(); err != nil {
 		if os.IsNotExist(err) {

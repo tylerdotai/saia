@@ -3,6 +3,7 @@ package health
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 type Server struct {
@@ -22,12 +23,17 @@ func (s *Server) Start() error {
 	http.HandleFunc("/health", s.handleHealth)
 	http.HandleFunc("/health/ready", s.handleReady)
 	addr := fmt.Sprintf(":%d", s.port)
-	return http.ListenAndServe(addr, nil)
+	srv := &http.Server{
+		Addr:         addr,
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  30 * time.Second,
+	}
+	return srv.ListenAndServe()
 }
 
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status":"ok"}`))
+	_, _ = w.Write([]byte(`{"status":"ok"}`))
 }
 
 func (s *Server) handleReady(w http.ResponseWriter, r *http.Request) {
@@ -35,8 +41,8 @@ func (s *Server) handleReady(w http.ResponseWriter, r *http.Request) {
 	if !s.dbOK {
 		status = "degraded"
 	}
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf(`{"status":"%s","db":"%s"}`, status, boolStr(s.dbOK))))
+	body := fmt.Sprintf(`{"status":"%s","db":"%s"}`, status, boolStr(s.dbOK))
+	_, _ = w.Write([]byte(body))
 }
 
 func boolStr(b bool) string {

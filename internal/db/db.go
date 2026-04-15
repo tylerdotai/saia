@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS meta (
 func Initialize(dbPath string) (*sql.DB, error) {
 	// Ensure directory exists
 	dir := filepath.Dir(dbPath)
-	if err := os.MkdirAll(dir, 0755); err != nil {
+	if err := os.MkdirAll(dir, 0750); err != nil {
 		return nil, fmt.Errorf("creating db directory: %w", err)
 	}
 

@@ -18,7 +18,7 @@ func init() {
 	}
 
 	// JSON for file logging (structured, searchable)
-	file, err := os.OpenFile("/tmp/saio.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	file, err := os.OpenFile("/tmp/saio.log", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
 		// Fall back to stdout only
 		Logger = log.Output(console)

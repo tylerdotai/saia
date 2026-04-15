@@ -3,6 +3,7 @@ package exec
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os/exec"
 	"time"
@@ -33,6 +34,7 @@ func (e *Executor) Run(ctx context.Context, command string) (*Result, error) {
 	ctx, cancel := context.WithTimeout(ctx, e.Timeout)
 	defer cancel()
 
+	//nolint:gosec // Intentional: shell commands are the core purpose of this executor
 	cmd := exec.CommandContext(ctx, e.Shell, "-c", command)
 	cmd.Dir = e.CWD
 
@@ -46,7 +48,8 @@ func (e *Executor) Run(ctx context.Context, command string) (*Result, error) {
 
 	exitCode := 0
 	if err != nil {
-		if exitErr, ok := err.(*exec.ExitError); ok {
+		var exitErr *exec.ExitError
+		if errors.As(err, &exitErr) {
 			exitCode = exitErr.ExitCode()
 		} else {
 			return nil, fmt.Errorf("exec error: %w", err)
