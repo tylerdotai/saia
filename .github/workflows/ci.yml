@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ${{ github.workspace }}/saia
+        working-directory: ${{ github.workspace }}
 
     steps:
       - name: Checkout
