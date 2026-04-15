@@ -23,10 +23,12 @@ jobs:
 
       - name: Format
         run: |
-          pwd
-          ls go.mod 2>/dev/null || echo "NOT FOUND"
-          go fmt ./...
-          git diff --exit-code
+          unformatted=$(gofmt -l .)
+          if [ -n "$unformatted" ]; then
+            echo "Unformatted files:"
+            echo "$unformatted"
+            exit 1
+          fi
 
       - name: Lint
         run: |
