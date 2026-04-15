@@ -9,9 +9,15 @@ jobs:
   release:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/saia
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          path: ${{ github.workspace }}/saia
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -59,7 +65,7 @@ jobs:
       - name: Build + Push Docker (amd64)
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ${{ github.workspace }}/saia
           push: true
           tags: |
             saia/saia:${{ steps.version.outputs.VERSION }}
