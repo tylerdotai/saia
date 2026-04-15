@@ -1,0 +1,40 @@
+# Binaries
+saiad
+saia
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build output
+/build/
+/dist/
+
+# Test artifacts
+*.test
+*.out
+
+# Runtime data (NEVER commit)
+.saio/
+.saio.db
+logs/
+
+# Config (contains secrets)
+*.local.json
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+vendor/
+*.mod
+*.sum

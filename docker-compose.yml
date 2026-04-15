@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  saia:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: saia/saia:local
+    container_name: saia
+    restart: unless-stopped
+    volumes:
+      # Mount config and runtime data
+      - ~/.saia/config.json:/home/saia/.saia/config.json:ro
+      - ~/.saia/skills:/home/saia/.saia/skills:ro
+      - ~/.saia/saia.db:/home/saia/.saia/saia.db
+      - ~/.saia/logs:/home/saia/.saia/logs
+    environment:
+      - SAIA_LOG_LEVEL=info
+    ports:
+      - "8080:8080"  # Healthcheck port
+    depends_on:
+      - searxng
+      - redis
+
+  # Optional: Local SearXNG for web search skill
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    ports:
+      - "8888:8080"
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8888/
+
+  # Optional: Redis for session caching (Phase 2)
+  redis:
+    image: redis:7-alpine
+    container_name: saia-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:

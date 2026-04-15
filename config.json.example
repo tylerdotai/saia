@@ -1,0 +1,35 @@
+{
+  "discord": {
+    "token": "YOUR_DISCORD_BOT_TOKEN",
+    "guild_id": "YOUR_GUILD_ID",
+    "allowed_channels": []
+  },
+  "model": {
+    "provider": "minimax",
+    "api_key": "YOUR_MINIMAX_API_KEY",
+    "endpoint": "https://api.minimax.chat/v1",
+    "model": "MiniMax-M2.7",
+    "max_tokens": 8192,
+    "temperature": 0.7
+  },
+  "database": {
+    "path": "~/.saia/saia.db"
+  },
+  "exec": {
+    "shell": "/bin/bash",
+    "cwd": "/home/dexter",
+    "timeout_seconds": 30,
+    "backend": "host"
+  },
+  "mcp": {
+    "servers": []
+  },
+  "health": {
+    "port": 8080,
+    "enabled": true
+  },
+  "logging": {
+    "level": "info",
+    "path": "~/.saia/logs/saiad.log"
+  }
+}
