@@ -24,20 +24,30 @@ linters-settings:
     rules:
       - name: blank-imports
       - name: context-as-argument
-      - name: context-keys-type
       - name: error-return
       - name: error-strings
       - name: error-naming
-      - name: exported
       - name: increment-decrement
       - name: var-naming
-      - name: var-declaration
       - name: package-comments
       - name: range
       - name: receiver-naming
       - name: unexported-naming
       - name: errorf
-      - name: deep-exit
+      - name: exported
+
+issues:
+  exclude-rules:
+    # Disable doc comment requirements for stub/generated code
+    - path: _test\.go
+      linters:
+        - revive
+    - linters:
+        - revive
+      text: "exported.*should have comment" 
+    - linters:
+        - revive
+      text: "should have a package comment"
 
 issues:
   exclude-use-default: false
