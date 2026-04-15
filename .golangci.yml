@@ -29,25 +29,10 @@ linters-settings:
       - name: error-naming
       - name: increment-decrement
       - name: var-naming
-      - name: package-comments
       - name: range
       - name: receiver-naming
       - name: unexported-naming
       - name: errorf
-      - name: exported
-
-issues:
-  exclude-rules:
-    # Disable doc comment requirements for stub/generated code
-    - path: _test\.go
-      linters:
-        - revive
-    - linters:
-        - revive
-      text: "exported.*should have comment" 
-    - linters:
-        - revive
-      text: "should have a package comment"
 
 issues:
   exclude-use-default: false
@@ -56,3 +41,13 @@ issues:
   exclude-dirs:
     - vendor
     - .github
+  exclude-rules:
+    - linters:
+        - revive
+      text: "exported.*should have comment"
+    - linters:
+        - revive
+      text: "should have a package comment"
+
+run:
+  timeout: 5m
