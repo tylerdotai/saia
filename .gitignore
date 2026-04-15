@@ -36,5 +36,4 @@ Thumbs.db
 
 # Go
 vendor/
-*.mod
-*.sum
+go.sum  # DO NOT IGNORE — required by Go module system and CI
