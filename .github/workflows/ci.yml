@@ -21,14 +21,6 @@ jobs:
       - name: Install golangci-lint
         run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
-      - name: Debug workspace
-        run: |
-          echo "workspace=${{ github.workspace }}"
-          echo "contents:"
-          ls -la ${{ github.workspace }}
-          echo "go.mod exists:"
-          test -f ${{ github.workspace }}/go.mod && echo "YES" || echo "NO"
-
       - name: Format
         run: |
           pwd

@@ -9,8 +9,8 @@ import (
 )
 
 type Agent struct {
-	cfg     *config.Config
-	db      *sql.DB
+	cfg *config.Config
+	db  *sql.DB
 }
 
 func New(cfg *config.Config, database *sql.DB) *Agent {
@@ -23,13 +23,13 @@ func (a *Agent) Prompt(ctx context.Context, p Prompt) (*Response, error) {
 }
 
 type Prompt struct {
-	SessionID  string
-	Platform   string
-	ChannelID  string
-	UserID     string
-	Content    string
-	Role       string
-	Metadata   map[string]any
+	SessionID string
+	Platform  string
+	ChannelID string
+	UserID    string
+	Content   string
+	Role      string
+	Metadata  map[string]any
 }
 
 type Response struct {
@@ -41,8 +41,8 @@ type Response struct {
 }
 
 type ToolCall struct {
-	Name      string
-	Args      map[string]string
-	Result    string
-	Success   bool
+	Name    string
+	Args    map[string]string
+	Result  string
+	Success bool
 }

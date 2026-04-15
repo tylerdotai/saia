@@ -39,10 +39,10 @@ type DatabaseConfig struct {
 }
 
 type ExecConfig struct {
-	Shell         string `json:"shell"`
-	CWD           string `json:"cwd"`
-	TimeoutSecs   int    `json:"timeout_seconds"`
-	Backend       string `json:"backend"` // "host" or "docker"
+	Shell       string `json:"shell"`
+	CWD         string `json:"cwd"`
+	TimeoutSecs int    `json:"timeout_seconds"`
+	Backend     string `json:"backend"` // "host" or "docker"
 }
 
 type MCPConfig struct {
