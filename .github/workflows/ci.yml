@@ -9,11 +9,6 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,40 +17,40 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "1.22"
-          cache: true
-
-      - name: Cache Go modules
-        uses: actions/cache@v4
-        with:
-          path: ~/go/pkg/mod
-          key: ${{ runner.os }}-saia-go-${{ hashFiles('saia/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
 
       - name: Install golangci-lint
         run: go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 
       - name: Format
         run: |
+          cd ${{ github.workspace }}
           go fmt ./...
           git diff --exit-code
 
       - name: Lint
-        run: golangci-lint run ./...
+        run: |
+          cd ${{ github.workspace }}
+          golangci-lint run ./...
 
       - name: Tidy
         run: |
+          cd ${{ github.workspace }}
           go mod tidy
           git diff --exit-code go.mod go.sum
 
       - name: Build
-        run: go build ./...
+        run: |
+          cd ${{ github.workspace }}
+          go build ./...
 
       - name: Test + Race
-        run: go test ./... -race -count=1
+        run: |
+          cd ${{ github.workspace }}
+          go test ./... -race -count=1
 
       - name: Coverage
         run: |
+          cd ${{ github.workspace }}
           go test ./... -coverprofile=coverage.out -covermode=atomic
           go tool cover -func=coverage.out | grep total
           MIN_COVERAGE=70
